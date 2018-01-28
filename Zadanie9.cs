@@ -24,6 +24,7 @@ namespace IO_final
         public MatMulCalculator()
         {
             onCompletedCallback = new SendOrPostCallback(CalculateCompleted);
+            MatMulCompleted += onCompletion;
         }
 
         public void CalculateCompleted(object state)
@@ -50,6 +51,15 @@ namespace IO_final
             return mat;
         }
 
+        public static void onCompletion(object sender, MatMulCompletedEventArgs e)
+        {
+            Console.WriteLine("Mat1:");
+            MatMulCalculator.Print(e.Array1);
+            Console.WriteLine("Mat2:");
+            MatMulCalculator.Print(e.Array2);
+            Console.WriteLine("Mat3:");
+            MatMulCalculator.Print(e.Array3);
+        }
         void Completion(int size, double[][] mat, Exception ex, bool cancelled, AsyncOperation ao)
         {
         }
@@ -155,7 +165,7 @@ namespace IO_final
         {
             int TaskID = 1;
             MatMulCalculator mmc = new MatMulCalculator();
-            mmc.MatMulCompleted += onCompletion;
+            
 
             for (int i = 0; i < 2; i++)
             {
@@ -169,14 +179,6 @@ namespace IO_final
             Thread.Sleep(1000);
         }
 
-        public static void onCompletion(object sender, MatMulCompletedEventArgs e)
-        {
-            Console.WriteLine("Mat1:");
-            MatMulCalculator.Print(e.Array1);
-            Console.WriteLine("Mat2:");
-            MatMulCalculator.Print(e.Array2);
-            Console.WriteLine("Mat3:");
-            MatMulCalculator.Print(e.Array3);
-        }
+        
     }
 }
